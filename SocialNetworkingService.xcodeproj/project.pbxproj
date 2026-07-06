@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E47EC6B22FD7F9B8005F85FF /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E47EC6B12FD7F9B8005F85FF /* KeychainSwift */; };
+		E4FAA6482FE29ACE0017634E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E4FAA6472FE29ACE0017634E /* FirebaseAuth */; };
+		E4FAA64A2FE29ACE0017634E /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = E4FAA6492FE29ACE0017634E /* FirebaseCore */; };
+		E4FAA64C2FE29ACE0017634E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E4FAA64B2FE29ACE0017634E /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E444DA7F2FD47F4F00DACDBA /* SocialNetworkingService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialNetworkingService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E47EC6B22FD7F9B8005F85FF /* KeychainSwift in Frameworks */,
+				E4FAA64C2FE29ACE0017634E /* FirebaseFirestore in Frameworks */,
+				E4FAA64A2FE29ACE0017634E /* FirebaseCore in Frameworks */,
+				E4FAA6482FE29ACE0017634E /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,10 @@
 			);
 			name = SocialNetworkingService;
 			packageProductDependencies = (
+				E47EC6B12FD7F9B8005F85FF /* KeychainSwift */,
+				E4FAA6472FE29ACE0017634E /* FirebaseAuth */,
+				E4FAA6492FE29ACE0017634E /* FirebaseCore */,
+				E4FAA64B2FE29ACE0017634E /* FirebaseFirestore */,
 			);
 			productName = SocialNetworkingService;
 			productReference = E444DA7F2FD47F4F00DACDBA /* SocialNetworkingService.app */;
@@ -107,6 +122,10 @@
 			);
 			mainGroup = E444DA762FD47F4F00DACDBA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E47EC6B02FD7F9B8005F85FF /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				E4FAA6462FE29ACE0017634E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E444DA802FD47F4F00DACDBA /* Products */;
 			projectDirPath = "";
@@ -150,8 +169,7 @@
 				INFOPLIST_FILE = SocialNetworkingService/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -186,8 +204,7 @@
 				INFOPLIST_FILE = SocialNetworkingService/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -353,6 +370,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E47EC6B02FD7F9B8005F85FF /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.0.0;
+			};
+		};
+		E4FAA6462FE29ACE0017634E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E47EC6B12FD7F9B8005F85FF /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E47EC6B02FD7F9B8005F85FF /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
+		E4FAA6472FE29ACE0017634E /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4FAA6462FE29ACE0017634E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		E4FAA6492FE29ACE0017634E /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4FAA6462FE29ACE0017634E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		E4FAA64B2FE29ACE0017634E /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4FAA6462FE29ACE0017634E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E444DA772FD47F4F00DACDBA /* Project object */;
 }
