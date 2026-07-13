@@ -179,7 +179,7 @@ class SingleProfileTableViewCell: UITableViewCell {
 
     func updateForProfileScreen() {
         if !(FirebaseAuthManager.shared.fetchedUser == nil) {
-            self.myImageView.image = UIImage(named: "TestImage")
+            self.myImageView.image = UIImage(named: "ProfileImage")
             self.profileNameLabel.text = FirebaseAuthManager.shared.fetchedUser!.firstName + " " + FirebaseAuthManager.shared.fetchedUser!.lastName
             self.emailLabel.text = "Email: " + FirebaseAuthManager.shared.fetchedUser!.email
             self.genderLabel.text = "Gender: " + FirebaseAuthManager.shared.fetchedUser!.gender

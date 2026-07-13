@@ -39,18 +39,6 @@ class LogInViewController: UIViewController {
 
         loginTextField.delegate = self
 
-        loginTextField.addTarget(
-            self,
-            action: #selector(enableOrDisableLogInButton),
-            for: .editingDidEnd
-        )
-
-        loginTextField.addTarget(
-            self,
-            action: #selector(disableLogInButton),
-            for: .editingDidBegin
-        )
-
         return loginTextField
     }()
 
@@ -72,18 +60,6 @@ class LogInViewController: UIViewController {
         passwordTextField.layer.borderColor = .none
 
         passwordTextField.delegate = self
-
-        passwordTextField.addTarget(
-            self,
-            action: #selector(enableOrDisableLogInButton),
-            for: .editingDidEnd
-        )
-
-        passwordTextField.addTarget(
-            self,
-            action: #selector(disableLogInButton),
-            for: .editingDidBegin
-        )
 
         return passwordTextField
     }()
@@ -126,7 +102,7 @@ class LogInViewController: UIViewController {
 
         logInButton.addTarget(self, action: #selector(logInButtonTapped), for: .touchUpInside)
 
-        logInButton.isEnabled = false
+        logInButton.isEnabled = true
 
         return logInButton
     }()
@@ -243,18 +219,6 @@ class LogInViewController: UIViewController {
         let presentedController = SignUpViewController()
 
         self.present(presentedController, animated: true)
-    }
-
-    @objc func enableOrDisableLogInButton() {
-        if (self.loginTextField.text != "" && self.passwordTextField.text != "") {
-            logInButton.isEnabled = true
-        } else {
-            logInButton.isEnabled = false
-        }
-    }
-
-    @objc func disableLogInButton() {
-        logInButton.isEnabled = false
     }
 
     // MARK: - Private

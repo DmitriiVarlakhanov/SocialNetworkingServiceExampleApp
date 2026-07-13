@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct ProfileJSONModel: Codable {
+struct ProfileJSONModel: nonisolated Codable {
     let users: [User]
 }
 
-struct User: Codable {
+struct User: nonisolated Codable {
     let firstName: String
     let lastName: String
     let age: Int
@@ -24,7 +24,7 @@ struct User: Codable {
     let address: Address
 }
 
-struct Address: Codable {
+struct Address: nonisolated Codable {
     let city: String
     let country: String
 }

@@ -38,11 +38,11 @@ class CoreDataManager {
 
     // Method
 
-    func addPostToCoreData(imageData: Data, title: String, body: String, likes: String, views: String) {
+    func addPostToCoreData(imageData: Data, title: String, body: String, likes: String, views: String, id: String) {
         self.fetchObjectsFromCoreData()
 
         for fetchedPost in fetchedPosts {
-            guard !(imageData == fetchedPost.image && title == fetchedPost.title && body == fetchedPost.body && likes == fetchedPost.likes && views == fetchedPost.views) else {
+            guard !(id == fetchedPost.identificator) else {
                 print("----------Post already exists----------")
 
                 return
@@ -57,6 +57,7 @@ class CoreDataManager {
         post.body = body
         post.likes = likes
         post.views = views
+        post.identificator = id
 
         do {
             try persistentContainer.viewContext.save()
@@ -66,6 +67,8 @@ class CoreDataManager {
         } catch {
             print(error.localizedDescription)
         }
+
+        self.fetchObjectsFromCoreData()
     }
 
     // Method
@@ -114,14 +117,14 @@ class CoreDataManager {
 
     // Method
 
-    func deleteAnObjectFromCoreData(imageData: Data, title: String, body: String, likes: String, views: String) {
+    func deleteAnObjectFromCoreData(id: String) {
         let fetchRequest = CoreDataPostModel.fetchRequest()
 
         do {
             let postsFromCoreData = try persistentContainer.viewContext.fetch(fetchRequest)
 
             for post in postsFromCoreData {
-                if imageData == post.image && title == post.title && body == post.body && likes == post.likes && views == post.views {
+                if id == post.identificator {
                     persistentContainer.viewContext.delete(post)
 
                     break

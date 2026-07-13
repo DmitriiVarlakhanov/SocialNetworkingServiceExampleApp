@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct PostJSONModel: Codable {
+struct PostJSONModel: nonisolated Codable {
     let posts: [Post]
 }
 
-struct Post: Codable {
+struct Post: nonisolated Codable {
     let id: Int
     let title: String
     let body: String
@@ -19,6 +19,6 @@ struct Post: Codable {
     let views: Int
 }
 
-struct Reaction: Codable {
+struct Reaction: nonisolated Codable {
     let likes: Int
 }

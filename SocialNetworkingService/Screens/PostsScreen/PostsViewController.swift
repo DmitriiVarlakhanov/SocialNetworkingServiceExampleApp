@@ -50,7 +50,11 @@ class PostsViewController: UIViewController {
         self.navigationItem.title = "Social Networking Service"
         self.navigationController?.navigationBar.isHidden = false
 
+        CoreDataManager.shared.fetchObjectsFromCoreData()
+
         tableView.indexPathsForSelectedRows?.forEach { tableView.deselectRow(at: $0, animated: false) }
+
+        self.tableView.reloadData()
     }
 
     // MARK: - Private

@@ -61,18 +61,6 @@ class SignUpViewController: UIViewController {
 
         loginTextField.delegate = self
 
-        loginTextField.addTarget(
-            self,
-            action: #selector(enableOrDisableSignUpButton),
-            for: .editingDidEnd
-        )
-
-        loginTextField.addTarget(
-            self,
-            action: #selector(disableSignUpButton),
-            for: .editingDidBegin
-        )
-
         return loginTextField
     }()
 
@@ -94,18 +82,6 @@ class SignUpViewController: UIViewController {
         passwordTextField.layer.borderColor = .none
 
         passwordTextField.delegate = self
-
-        passwordTextField.addTarget(
-            self,
-            action: #selector(enableOrDisableSignUpButton),
-            for: .editingDidEnd
-        )
-
-        passwordTextField.addTarget(
-            self,
-            action: #selector(disableSignUpButton),
-            for: .editingDidBegin
-        )
 
         return passwordTextField
     }()
@@ -148,7 +124,7 @@ class SignUpViewController: UIViewController {
 
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
 
-        signUpButton.isEnabled = false
+        signUpButton.isEnabled = true
 
         return signUpButton
     }()
@@ -453,18 +429,6 @@ class SignUpViewController: UIViewController {
 
     @objc func cancelButtonTapped() {
         self.dismiss(animated: true)
-    }
-
-    @objc func enableOrDisableSignUpButton() {
-        if (self.loginTextField.text != "" && self.passwordTextField.text != "") {
-            signUpButton.isEnabled = true
-        } else {
-            signUpButton.isEnabled = false
-        }
-    }
-
-    @objc func disableSignUpButton() {
-        signUpButton.isEnabled = false
     }
 
     @objc func datePickerValueChanged() {
