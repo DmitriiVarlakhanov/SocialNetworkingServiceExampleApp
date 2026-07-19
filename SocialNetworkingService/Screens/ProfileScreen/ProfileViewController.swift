@@ -11,7 +11,7 @@ class ProfileViewController: UIViewController {
 
     // MARK: - Properties
 
-    private lazy var profileTableView: UITableView = {
+    lazy var profileTableView: UITableView = {
         let profileTableView = UITableView(frame: .zero, style: .plain)
 
         profileTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,30 @@ class ProfileViewController: UIViewController {
 
         self.navigationController?.navigationBar.isHidden = false
 
+        let createPostUIBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "plus.circle"),
+            style: .plain,
+            target: self,
+            action: #selector(createPostUIBarButtonItemTapped)
+        )
+
+        self.navigationItem.leftBarButtonItem = createPostUIBarButtonItem
+
+        CoreDataManager.shared.fetchObjectsFromCoreData()
+
         profileTableView.indexPathsForSelectedRows?.forEach { profileTableView.deselectRow(at: $0, animated: false) }
+
+        self.profileTableView.reloadData()
+    }
+
+    // MARK: - Actions
+
+    @objc func createPostUIBarButtonItemTapped() {
+        let createPostViewController = CreatePostViewController(previousController: self)
+
+        createPostViewController.modalPresentationStyle = .fullScreen
+
+        self.present(createPostViewController, animated: true)
     }
 
     // MARK: - Private
@@ -103,7 +126,7 @@ extension ProfileViewController: UITableViewDataSource {
                 fatalError("could not dequeueReusableCell")
             }
 
-            cell.updateForProfileScreen(indexPathRow: indexPath.row + 26)
+            cell.updateForProfileScreen(indexPathRow: indexPath.row)
 
             return cell
         } else {
@@ -136,8 +159,8 @@ extension ProfileViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 2 {
-            if !(NetworkManager.shared.postJSONModel.posts.isEmpty) {
-                return 4
+            if !(CreatedPostsManager.shared.createdPosts.isEmpty) {
+                return CreatedPostsManager.shared.createdPosts.count
             } else {
                 return 0
             }

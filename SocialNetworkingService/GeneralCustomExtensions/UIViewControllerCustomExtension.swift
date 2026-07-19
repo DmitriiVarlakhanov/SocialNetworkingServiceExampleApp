@@ -39,6 +39,10 @@ extension UIViewController {
                     tag: 2
                 )
 
+                postsViewController.navigationItem.rightBarButtonItems = [SignOutUIBarButtonItem()]
+                profileViewController.navigationItem.rightBarButtonItems = [SignOutUIBarButtonItem()]
+                savedPostsViewController.navigationItem.rightBarButtonItems = [SignOutUIBarButtonItem()]
+
                 let navigationControllerForProfileViewController = UINavigationController(rootViewController: profileViewController)
                 let navigationControllerForPostsViewController = UINavigationController(rootViewController: postsViewController)
                 let navigationControllerForSavedPostsViewController = UINavigationController(rootViewController: savedPostsViewController)

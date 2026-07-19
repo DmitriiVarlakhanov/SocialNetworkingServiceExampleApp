@@ -100,15 +100,11 @@ extension SavedPostsViewController: UITableViewDataSource {
         if editingStyle == .delete {
             let cell = tableView.cellForRow(at: indexPath) as! PostTableViewCellForSavedPostsScreen
 
-            CoreDataManager.shared.deleteAnObjectFromCoreData(
-                imageData: cell.imageImageView.image?.pngData() ?? Data(),
-                title: cell.titleLabel.text ?? "",
-                body: cell.descriptionLabel.text ?? "",
-                likes: cell.likesLabel.text ?? "",
-                views: cell.viewsLabel.text ?? ""
-            )
+            CoreDataManager.shared.deleteAnObjectFromCoreData(id: cell.id)
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
+
+            CoreDataManager.shared.fetchObjectsFromCoreData()
         }
     }
 }

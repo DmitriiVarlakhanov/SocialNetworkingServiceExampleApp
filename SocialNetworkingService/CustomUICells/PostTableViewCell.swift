@@ -11,6 +11,29 @@ class PostTableViewCell: UITableViewCell {
 
     // MARK: - Properties
 
+    private lazy var id: String = ""
+
+    private lazy var likeImageView: UIImageView = {
+        let likeImageView = UIImageView()
+
+        likeImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        likeImageView.image = UIImage(systemName: "heart")
+
+        likeImageView.backgroundColor = .white
+        likeImageView.contentMode = .scaleAspectFill
+
+        likeImageView.clipsToBounds = true
+
+        likeImageView.isUserInteractionEnabled = true
+
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(likeImageViewTapped))
+
+        likeImageView.addGestureRecognizer(gestureRecognizer)
+
+        return likeImageView
+    }()
+
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
 
@@ -90,7 +113,7 @@ class PostTableViewCell: UITableViewCell {
 
     // MARK: - Actions
 
-    @objc private func postTableViewCellTapped() {
+    @objc private func likeImageViewTapped() {
         let imageData = self.imageImageView.image?.pngData()
 
         CoreDataManager.shared.addPostToCoreData(
@@ -98,44 +121,19 @@ class PostTableViewCell: UITableViewCell {
             title: self.titleLabel.text ?? "",
             body: self.descriptionLabel.text ?? "",
             likes: self.likesLabel.text ?? "",
-            views: self.viewsLabel.text ?? ""
+            views: self.viewsLabel.text ?? "",
+            id: self.id
         )
 
-        let alertController = UIAlertController(
-            title: "Saved",
-            message: "The post was saved to your app",
-            preferredStyle: .alert
-        )
+        let heartFillImage = UIImage(systemName: "heart.fill")
 
-        let action = UIAlertAction(
-            title: "Ok",
-            style: .cancel
-        )
-
-        alertController.addAction(action)
-
-        let topMostViewController = UIApplication.shared.topMostViewController() ?? UIViewController()
-
-        topMostViewController.present(alertController, animated: true)
-
-        print("PostTableViewCell tapped")
+        self.likeImageView.image = heartFillImage
     }
 
     // MARK: - Private
 
     private func setupTableViewCell() {
         self.selectionStyle = .none
-
-        self.contentView.isUserInteractionEnabled = true
-
-        let gestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(postTableViewCellTapped)
-        )
-
-        gestureRecognizer.numberOfTapsRequired = 2
-
-        self.contentView.addGestureRecognizer(gestureRecognizer)
     }
 
     private func addSubviews() {
@@ -144,6 +142,7 @@ class PostTableViewCell: UITableViewCell {
         self.contentView.addSubview(descriptionLabel)
         self.contentView.addSubview(likesLabel)
         self.contentView.addSubview(viewsLabel)
+        self.contentView.addSubview(likeImageView)
     }
 
     private func setupConstraints() {
@@ -165,8 +164,12 @@ class PostTableViewCell: UITableViewCell {
             likesLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             likesLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
 
+            likeImageView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            likeImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            likeImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
+
             viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            viewsLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            viewsLabel.trailingAnchor.constraint(equalTo: self.likeImageView.leadingAnchor, constant: -5),
             viewsLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
         ])
     }
@@ -182,33 +185,42 @@ class PostTableViewCell: UITableViewCell {
             descriptionLabel.text = NetworkManager.shared.postJSONModel.posts[indexPath.row].body
             likesLabel.text = "Likes: \(NetworkManager.shared.postJSONModel.posts[indexPath.row].reactions.likes)"
             viewsLabel.text = "Views: \(NetworkManager.shared.postJSONModel.posts[indexPath.row].views)"
+            id = String(NetworkManager.shared.postJSONModel.posts[indexPath.row].id)
         } else {
             return
+        }
+
+        let isSaved = CoreDataManager.shared.fetchedPosts.contains { fetchedPost in
+            fetchedPost.identificator == self.id
+        }
+
+        if isSaved {
+            self.likeImageView.image = UIImage(systemName: "heart.fill")
+        } else {
+            self.likeImageView.image = UIImage(systemName: "heart")
         }
     }
 
     func updateForProfileScreen(indexPathRow: Int) {
-        if !(NetworkManager.shared.postJSONModel.posts.isEmpty) {
-            titleLabel.text = NetworkManager.shared.postJSONModel.posts[indexPathRow].title
-            imageImageView.image = UIImage(
-                named: "Image\(NetworkManager.shared.postJSONModel.posts[indexPathRow].id)"
-            )
-            descriptionLabel.text = NetworkManager.shared.postJSONModel.posts[indexPathRow].body
-            likesLabel.text = "Likes: \(NetworkManager.shared.postJSONModel.posts[indexPathRow].reactions.likes)"
-            viewsLabel.text = "Views: \(NetworkManager.shared.postJSONModel.posts[indexPathRow].views)"
+        if !(CreatedPostsManager.shared.createdPosts.isEmpty) {
+            titleLabel.text = CreatedPostsManager.shared.createdPosts[indexPathRow].title
+            imageImageView.image = CreatedPostsManager.shared.createdPosts[indexPathRow].image
+            descriptionLabel.text = CreatedPostsManager.shared.createdPosts[indexPathRow].body
+            likesLabel.text = "Likes: \(CreatedPostsManager.shared.createdPosts[indexPathRow].likes)"
+            viewsLabel.text = "Views: \(CreatedPostsManager.shared.createdPosts[indexPathRow].views)"
+            id = CreatedPostsManager.shared.createdPosts[indexPathRow].id
         } else {
             return
         }
-    }
 
+        let isSaved = CoreDataManager.shared.fetchedPosts.contains { fetchedPost in
+            fetchedPost.identificator == self.id
+        }
 
-    func updateForSavedPostsScreen(indexPath: IndexPath) {
-        titleLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].title
-
-        imageImageView.image = UIImage(data: CoreDataManager.shared.fetchedPosts[indexPath.row].image ?? Data())
-
-        descriptionLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].body
-        likesLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].likes
-        viewsLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].views
+        if isSaved {
+            self.likeImageView.image = UIImage(systemName: "heart.fill")
+        } else {
+            self.likeImageView.image = UIImage(systemName: "heart")
+        }
     }
 }

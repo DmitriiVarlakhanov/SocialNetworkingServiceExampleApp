@@ -157,7 +157,7 @@ class FirebaseAuthManager {
                 }
             }
 
-            print("Fetched user - \(self.fetchedUser)")
+            print("Fetched user - \(self.fetchedUser!)")
         }
     }
 
@@ -186,6 +186,16 @@ class FirebaseAuthManager {
             for documentID in documentIDs {
                 self.db.collection("users").document(documentID).delete()
             }
+        }
+    }
+
+    // Method:
+
+    func signOut() {
+        do {
+            try auth.signOut()
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

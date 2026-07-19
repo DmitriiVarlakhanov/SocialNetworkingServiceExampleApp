@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserProfileFirestoreModel: Codable {
+struct UserProfileFirestoreModel: nonisolated Codable {
     let firstName: String
     let lastName: String
     let email: String

@@ -60,6 +60,8 @@ class FriendsOwnProfileViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
 
         profileTableView.indexPathsForSelectedRows?.forEach { profileTableView.deselectRow(at: $0, animated: false) }
+
+        self.profileTableView.reloadData()
     }
 
     // MARK: - Private

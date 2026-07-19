@@ -11,6 +11,8 @@ class PostTableViewCellForSavedPostsScreen: UITableViewCell {
 
     // MARK: - Properties
 
+    lazy var id: String = ""
+
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
 
@@ -129,35 +131,6 @@ class PostTableViewCellForSavedPostsScreen: UITableViewCell {
 
     // MARK: - Public
 
-    func update(indexPath: IndexPath) {
-        if !(NetworkManager.shared.postJSONModel.posts.isEmpty) {
-            titleLabel.text = NetworkManager.shared.postJSONModel.posts[indexPath.row].title
-            imageImageView.image = UIImage(
-                named: "Image\(NetworkManager.shared.postJSONModel.posts[indexPath.row].id)"
-            )
-            descriptionLabel.text = NetworkManager.shared.postJSONModel.posts[indexPath.row].body
-            likesLabel.text = "Likes: \(NetworkManager.shared.postJSONModel.posts[indexPath.row].reactions.likes)"
-            viewsLabel.text = "Views: \(NetworkManager.shared.postJSONModel.posts[indexPath.row].views)"
-        } else {
-            return
-        }
-    }
-
-    func updateForProfileScreen(indexPathRow: Int) {
-        if !(NetworkManager.shared.postJSONModel.posts.isEmpty) {
-            titleLabel.text = NetworkManager.shared.postJSONModel.posts[indexPathRow].title
-            imageImageView.image = UIImage(
-                named: "Image\(NetworkManager.shared.postJSONModel.posts[indexPathRow].id)"
-            )
-            descriptionLabel.text = NetworkManager.shared.postJSONModel.posts[indexPathRow].body
-            likesLabel.text = "Likes: \(NetworkManager.shared.postJSONModel.posts[indexPathRow].reactions.likes)"
-            viewsLabel.text = "Views: \(NetworkManager.shared.postJSONModel.posts[indexPathRow].views)"
-        } else {
-            return
-        }
-    }
-
-
     func updateForSavedPostsScreen(indexPath: IndexPath) {
         titleLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].title
 
@@ -166,5 +139,6 @@ class PostTableViewCellForSavedPostsScreen: UITableViewCell {
         descriptionLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].body
         likesLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].likes
         viewsLabel.text = CoreDataManager.shared.fetchedPosts[indexPath.row].views
+        id = CoreDataManager.shared.fetchedPosts[indexPath.row].identificator ?? ""
     }
 }

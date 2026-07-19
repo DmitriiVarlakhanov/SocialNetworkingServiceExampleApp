@@ -26,4 +26,4 @@
 
 
 # Использование
-![SocialNetworkingService](https://github.com/DmitriiVarlakhanov/SocialNetworkingServiceExampleApp/blob/feature-fios-64/1/Screenshots/SocialNetworkingService.png)
+![SocialNetworkingService](https://github.com/DmitriiVarlakhanov/SocialNetworkingServiceExampleApp/blob/feature-fios-64/2/Screenshots/SocialNetworkingService.png)
